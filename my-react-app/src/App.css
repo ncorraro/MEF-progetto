@@ -1,0 +1,208 @@
+/* Navbar con altezza maggiore all'inizio e media dopo lo scroll */
+.navbar-large {
+  height: 120px; /* Altezza iniziale maggiore */
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-medium {
+  height: 80px; /* Altezza maggiore anche dopo lo scroll */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Logo con diverse dimensioni */
+.logo-large {
+  height: 60px;
+  transition: all 0.3s ease-in-out;
+}
+
+.logo-medium {
+  height: 45px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.bg-custom {
+  background-color: #202355; /* Blu personalizzato */
+  color: white; /* Testo bianco */
+  min-height: 100vh; /* Altezza completa della finestra */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Aggiungi questa classe per nascondere i nodi */
+.collapsed {
+  opacity: 0;  /* Rende il nodo invisibile */
+  pointer-events: none; /* Impedisce che il nodo sia interattivo */
+}
+
+/* Aggiungi questa classe per nascondere le edge */
+.collapsed {
+  display: none;  /* Nasconde l'edge */
+}
+
+
+/* Definizioni di stile per i nodi */
+.nodo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px; /* Dimensione minima */
+  max-width: 180px; /* Massima larghezza per limitare l'espansione */
+  width: auto;
+  text-align: center;
+  word-wrap: break-word; /* Permette il ritorno a capo */
+  word-break: break-word;
+  white-space: normal; /* Permette il ritorno a capo automaticamente */
+  padding: 10px;
+  border-color: #0d6efd;
+  border-radius: 10%;
+  border-width: 2px;
+}
+
+.nodo p {
+  font-size: 12px;
+  margin: 0;
+}
+
+
+.nodo .info-button {
+  width: 20px;
+  height: 20px;
+}
+
+.sp-icon {
+  width: 16px;  /* Stessa dimensione dei pulsanti */
+  height: 16px; 
+  object-fit: contain; /* Evita distorsioni */
+}
+
+.icon-button i {
+  font-size: 16px; /* Stessa dimensione dell'icona sp */
+  color: #093596;
+}
+
+.diamond-container {
+  width: 80px;
+  height: 80px;
+  background: #093596;
+  transform: rotate(45deg);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-color: #0d6efd;
+  border-radius: 20%;
+  border-width: 2px;
+}
+
+.diamond-text {
+  transform: rotate(-45deg);
+  text-align: center;
+  width: 60px;
+  font-size: 10px;
+  white-space: normal;
+}
+
+
+
+/* Handle sugli spigoli */
+.react-flow__handle {
+  background: black;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Pulsanti sugli angoli */
+.corner-button {
+  position: absolute;
+  z-index: 10;
+}
+.react-flow__edges {
+  z-index: 2 !important; /* Metti gli edge sopra */
+}
+
+.react-flow__nodes {
+  z-index: 1 !important; /* Metti i nodi sotto */
+}
+ 
+.react-flow__handle {
+  background: transparent !important;
+  border: none !important;
+}
+
+
+
+.custom-hr {
+  border: 3px solid #093596; /* Cambia il colore e lo spessore */
+  opacity: 1; /* Rendi la linea completamente visibile */
+
+}
+
+.dropdown-item {
+  white-space: normal !important;  /* Permette di andare a capo */
+  word-wrap: break-word !important;  /* Evita il testo fuori dai bordi */
+  overflow-wrap: break-word !important; /* Alternativa per maggiore compatibilità */
+  display: block !important; /* Assicura che l'elemento occupi l'intera larghezza */
+  max-width: 100% !important; /* Impedisce il troncamento */
+  white-space: pre-wrap !important; /* Assicura il wrapping corretto */
+}
+
+
+/* Aggiungi questo al tuo foglio di stile CSS */
+
+.page-container {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.flow-container {
+  width: 100%;
+  height: 70vh;
+  margin: 0;
+  padding: 0;
+}
+
+.reactflow-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* Assicurati che reactflow utilizzi tutta la larghezza disponibile */
+.react-flow {
+  width: 100%;
+  height: 100%;
+}
+
+/* Rimuovi eventuali margini o padding extra */
+.react-flow__renderer {
+  width: 100%;
+  height: 100%;
+}
+
+/* Per la visualizzazione mobile */
+@media (max-width: 768px) {
+  .flow-container {
+    height: 60vh;
+  }
+}

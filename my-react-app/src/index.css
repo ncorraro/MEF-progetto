@@ -1,0 +1,265 @@
+@import "bootstrap-icons/font/bootstrap-icons.min.css";
+
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./font/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./font/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.nb{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 8%;
+
+}
+
+.nb ul{
+  padding: 10px 30px;
+  border-radius: 30px;
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+
+}
+
+/* Applica a tutto il documento */
+body, html {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Override di Bootstrap */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, 
+.btn, .form-control, .nav-link, .dropdown-item, 
+.card, .alert, .modal {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.col1{
+  background: #093596 !important;
+}
+
+
+.coltext1 {
+  color: #093596 !important; /* Cambia colore al testo */
+}
+
+
+.col2{
+  background-color: #2e465e;
+}
+
+.col3{
+  background: #121a56 !important;;
+}
+
+.col4{
+  background: #849bcb !important;
+}
+
+.coltext4 {
+  color: #d5d5f3 !important; /* Cambia colore al testo */
+}
+
+
+
+
+.card.col2 {
+  background-color: #093596 !important; /* Colore iniziale */
+  transition: background-color 0.1s ease-in-out; /* Effetto di transizione */
+}
+
+.card.col2:hover {
+  background-color: #4c8ecf !important; /* Cambia colore quando ci passi sopra */
+}
+
+
+
+
+/* Aggiungi questo nel tuo file CSS */
+body {
+  margin: 0;
+  padding: 0;
+  padding-top: 80px; /* Distanza da quando la navbar è fissa in alto */
+}
+
+/* Se vuoi distanziare ulteriormente gli elementi sotto, puoi aggiungere margin */
+.container {
+  margin-top: 20px; /* Puoi regolare questo valore come preferisci */
+}
+
+.bg-photo {
+  background-image: url('../src/image/ministeroBlu.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px; /* Per arrotondare gli angoli */
+  padding: 20px;
+  color: white; /* Per rendere il testo leggibile */
+}
+
+.bg-photo2 {
+  background-image: url('../src/image/fotomin2.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px; /* Per arrotondare gli angoli */
+  padding: 20px;
+  color: white; /* Per rendere il testo leggibile */
+}
+
+.bg-photo3 {
+  background-image: url('../src/image/fotoMin3.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px; /* Per arrotondare gli angoli */
+  padding: 20px;
+  color: white; /* Per rendere il testo leggibile */
+}
+
+.bg-photo4 {
+  background-image: url('../src/image/UFFICIO.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px; /* Per arrotondare gli angoli */
+  padding: 20px;
+  color: white; /* Per rendere il testo leggibile */
+}
+
+.bg-photo5 {
+  background-image: url('../src/image/PROCESSO.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px; /* Per arrotondare gli angoli */
+  padding: 20px;
+  color: white; /* Per rendere il testo leggibile */
+}
+
+/* Mantieni la navbar stretta */
+.navbar {
+  padding-top: 5px !important;  
+  padding-bottom: 5px !important;
+  min-height: 50px !important;  
+}
+
+/* Aumenta la dimensione del logo indipendentemente dalla navbar */
+.logo {
+  height: 100px !important; /* Aumenta la dimensione */
+  width: auto !important;
+  margin-right: 15px !important;
+}
+
+
+
+
+/* Aggiunge spazio tra gli elementi */
+.navbar-brand {
+  display: flex;
+  align-items: center; /* Mantiene il logo e il titolo allineati */
+}
+
+/* Sovrascrivi .container per avere una larghezza fluida */
+.container {
+  width:auto; /* Occupiamo tutta la larghezza dello schermo */
+  margin: 0 auto; /* Centriamo il contenuto */
+  padding-left: 15px; /* Padding laterali per evitare che il contenuto tocchi i bordi */
+  padding-right: 15px;
+}
+
+/* Per il contenitore principale del contenuto */
+.main-content {
+  display: flex;
+  flex-direction: column; /* Adatta gli elementi in colonna */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    flex-direction: row; /* Disposizione a riga su schermi più larghi */
+    justify-content: space-between; /* Spaziatura tra gli elementi */
+  }
+}
+
+.custom-card {
+  background: transparent !important; /* Sfondo trasparente */
+  border: 5px solid white !important; /* Bordo bianco spesso */
+}
+.custom-card-blu {
+  background: transparent !important; /* Sfondo trasparente */
+  border: 5px solid #093596 !important; /* Bordo bianco spesso */
+}
+.custom-card-blu2 {
+  background: transparent !important; /* Sfondo trasparente */
+  border: 2px solid #093596 !important; /* Bordo bianco spesso */
+}
+
+
+.custom-text {
+  text-align: justify; /* Allinea il testo giustificato */
+  text-wrap: balance;  /* Mantiene la lunghezza delle righe simile */
+}
+
+.card-gradient {
+  background: linear-gradient(to bottom, #093596, #0d6efd);
+}
+
+
+
+.fade-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 500ms, transform 500ms;
+}
+.fade-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+.fade-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 500ms, transform 500ms;
+}
+
+
+:root {
+  /* Gradiente azzurro chiaro */
+  --gradient-start-1: #a1c4fd;
+  --gradient-end-1: #c2e9fb;
+  
+  /* Gradiente blu cielo */
+  --gradient-start-2: #48c6ef;
+  --gradient-end-2: #6f86d6;
+  
+  /* Gradiente blu medio */
+  --gradient-start-3: #4facfe;
+  --gradient-end-3: #00f2fe;
+  
+  /* Gradiente blu-grigio chiaro */
+  --gradient-start-4: #8ec5fc;
+  --gradient-end-4: #e0c3fc;
+}
+
+.gradient-card {
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: black; /* Cambiato in nero per maggiore leggibilità */
+  transition: all 0.3s ease;
+}
+
+.gradient-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}

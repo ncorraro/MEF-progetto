@@ -1,0 +1,14 @@
+/* src/FlowPage.css */
+.flow-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .react-flow {
+    width: 100%;
+    height: 70vh; /* Imposta l'altezza per il diagramma */
+    border: 2px solid #ddd;
+    background-color: white;
+    border-radius: 8px;
+  }
+  
