@@ -22,7 +22,7 @@ const ExpandableImage = () => {
       >
         {expanded ? (
           // Bootstrap's fade animation
-          <div className={`fade ${expanded ? 'show' : ''}`} style={{ transition: 'opacity .15s linear', opacity: expanded ? 1 : 0, display: expanded ? 'block' : 'none'}}>
+          <div className={`fade ${expanded ? 'show' : ''}`} style={{ transition: 'opacity .50s linear', opacity: expanded ? 1 : 0, display: expanded ? 'block' : 'none'}}>
             <img src={miss} alt="Immagine espansa"  className="w-100"  />
             <div className="d-flex justify-content-center align-items-center mb-3">
               <Link to={`/uffici`} className="btn col4 text-white align-self-start">

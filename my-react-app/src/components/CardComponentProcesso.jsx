@@ -26,7 +26,7 @@ function CardComponentProcesso({ id, nome, tipo, descrizione }) {
         
         {/* Nome Processo in alto a sinistra */}
         <div className="text-start">
-          <h3 className="fw-bold">Processo: {nome}</h3>
+          <h3 className="fw-bold">{nome}</h3>
         </div>
 
         {/* Descrizione centrata */}
