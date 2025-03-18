@@ -125,7 +125,7 @@ body {
 }
 
 .bg-photo4 {
-  background-image: url('../src/image/UFFICIO.png');
+  background-image: url('../src/image/UFF.png');
   background-size: cover;
   background-position: center;
   border-radius: 10px; /* Per arrotondare gli angoli */
@@ -134,7 +134,7 @@ body {
 }
 
 .bg-photo5 {
-  background-image: url('../src/image/PROCESSO.png');
+  background-image: url('../src/image/PRO.png');
   background-size: cover;
   background-position: center;
   border-radius: 10px; /* Per arrotondare gli angoli */

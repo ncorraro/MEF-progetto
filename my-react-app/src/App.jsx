@@ -20,6 +20,7 @@ import ProcessiPage from './pages/processi/ProcessiPage.jsx'
 import ProcessiCorePage from './pages/processi/ProcessiCorePage'
 import ProcessiVerticaliPage from './pages/processi/ProcessiVerticaliPage'
 import ProcessiRilevantiPage from './pages/processi/ProcessiRilevantiPage'
+import DisposizioniPage from './pages/DisposizioniPage'
 
 import Navbar from './components/Navbar'
 import {  Route , createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom'
@@ -44,6 +45,9 @@ const App = () => {
          {/* Routing da home a pagina */}
          <Route path='uffici' element={<UfficiPage />} /> 
          <Route path='processi' element={<ProcessiPage />} />
+         <Route path='disposizioni' element={<DisposizioniPage />} />
+
+
 
          {/* Routing da uffici a ufficio*/}
          <Route path='uffici/ufficio/:id' element={<UfficioPage />} />

@@ -94,7 +94,7 @@ const HomePage = () => {
             <div className="col-md-6">
               <div className="card  p-4 position-relative bg-photo5">
                 <p className="text-white text-start">
-                  I processi dell'Ispettorato si configurano come un complesso organizzativo-operative attraverso il quale l'IGPNRR assolve alle proprie mansioni.
+                  I processi dell'Ispettorato si configurano come un complesso organizzativo-operative dedicato alle proprie mansioni.
                 </p>
                 <Link 
                   to={`/processi`} 

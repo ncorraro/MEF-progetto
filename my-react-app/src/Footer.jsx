@@ -7,16 +7,19 @@ function Footer(){
             <div className="container mt-4 col1 rounded-2 shadow">
                 <div className="row p-2">
                     {/* Logo e nome */}
-                    <div className="col-3 d-flex align-items-center justify-content-center">
+                    <div className="col-3 d-flex flex-column align-items-center justify-content-center">
                         <div className="d-flex align-items-center justify-content-center">
                             <img src={logo} alt="Logo" style={{ maxWidth: "40%", height: "auto" }} />
                             <span className="text-white ms-2">MEF Ragioneria Generale dello Stato</span>
                         </div>
+                        <button className="btn btn-light btn-sm mt-2">
+                             <Link to={`/disposizioni`} className="btn btn-sm coltext1">Quadro normativo</Link>
+                        </button>
                     </div>
 
                     {/* Colonna Uffici */}
                     <div className="col-3 mt-2">
-                        <h5 className="text-white text-start"> <i class="bi bi-building"></i> Uffici </h5>
+                        <h5 className="text-white text-start"> <i className="bi bi-building"></i> Uffici </h5>
                         <div className="row mt-3" style={{ fontSize: 14 }}>
                             {/* Colonna Sinistra */}
                             <div className="col-6 text-start">
@@ -54,7 +57,7 @@ function Footer(){
 
                     {/* Colonna Processi */}
                     <div className="col mt-2">
-                        <h5 className="text-white text-start"><i class="bi bi-bar-chart-steps"></i> Processi </h5>
+                        <h5 className="text-white text-start"><i className="bi bi-bar-chart-steps"></i> Processi </h5>
                         <div className="row mt-3" style={{ fontSize: 14 }}>
                             <div className="col-12 text-start">
                                 <div className="mb-4">
@@ -78,7 +81,7 @@ function Footer(){
 
                     {/* Colonna Missioni */}
                     <div className="col mt-2">
-                        <h5 className="text-white text-start"> <i class="bi bi-box-arrow-in-down-right"></i> Missioni </h5>
+                        <h5 className="text-white text-start"> <i className="bi bi-box-arrow-in-down-right"></i> Missioni </h5>
                         <div className="row mt-3" style={{ fontSize: 14 }}>
                             <div className="col-12 text-start">
                                 <div className="mb-4">
@@ -102,7 +105,7 @@ function Footer(){
 
                     {/* Colonna Contatti */}
                     <div className="col mt-2">
-                        <h5 className="text-white text-start"><i class="bi bi-person-lines-fill"></i> Contatti </h5>
+                        <h5 className="text-white text-start"><i className="bi bi-person-lines-fill"></i> Contatti </h5>
                         <div className="row mt-3" style={{ fontSize: 14 }}>
                             <div className="col-12 text-start">
                                 <div className="mb-4 text-white">

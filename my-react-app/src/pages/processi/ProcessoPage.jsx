@@ -160,26 +160,29 @@ const ProcessoPage = () => {
       
 
 
-      {/* Fasi del Processo */}
+        {/* Fasi del Processo */}
       <div className="row mt-2">
         <div className="col">
           <div className="card shadow col1 text-white mb-3">
             <h4 className="display-6 text-start">Fasi del processo di funzionamento</h4>
-            {/* Tabs per le fasi */}
-            <ul className="nav nav-tabs mb-3">
-              {processo.funzionamento.map((fase, index) => (
-                <li className="nav-item" key={index}>
-                  <button
-                    className={`nav-link ${activeTab === `fase${fase.fase}` ? "active bg-white" : ""}`}
-                    onClick={() => setActiveTab(`fase${fase.fase}`)}
-                  >
-                    <span className={activeTab === `fase${fase.fase}` ? "coltext1" : "text-white"}>
-                      Fase {fase.fase}: {fase.titolo}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {/* Tabs per le fasi - con gestione overflow */}
+            <div className="nav-container position-relative">
+              <ul className="nav nav-tabs mb-3 flex-nowrap overflow-hidden">
+                {processo.funzionamento.map((fase, index) => (
+                  <li className="nav-item text-truncate" key={index} style={{ maxWidth: "200px" }}>
+                    <button
+                      className={`nav-link text-truncate w-100 ${activeTab === `fase${fase.fase}` ? "active bg-white" : ""}`}
+                      onClick={() => setActiveTab(`fase${fase.fase}`)}
+                      title={`Fase ${fase.fase}: ${fase.titolo}`}
+                    >
+                      <span className={activeTab === `fase${fase.fase}` ? "coltext1" : "text-white"}>
+                        Fase {fase.fase}: {fase.titolo}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {/* Contenuto delle fasi */}
             <div className="card p-3 shadow text-start">
