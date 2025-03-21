@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 # Configura la stringa di connessione
 # Formato: mysql+pymysql://username:password@host:port/database_name
-DATABASE_URL = "mysql+pymysql://root:my-secret-pw@localhost:3306/MEF_database"
+DATABASE_URL = "mysql+pymysql://root:nc030225@localhost:3306/mefapp"
 
 # Crea l'engine di SQLAlchemy
 engine = create_engine(DATABASE_URL)
@@ -15,11 +15,3 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Crea una classe Base che farà da base per tutti i modelli
 Base = declarative_base()
-
-# Funzione di dipendenza per ottenere una sessione DB
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
