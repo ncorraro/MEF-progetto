@@ -1,6 +1,5 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React ,{ useState,useEffect } from 'react'
+import api from './api.js'
 
 
 import "./../../node_modules/bootstrap/dist/css/bootstrap.min.css"
@@ -84,6 +83,19 @@ const App = () => {
       
     )
   )
+
+
+  const [uffici, setUffici] = useState([]);
+  
+  const fetchUffici = async () => {
+    const response = await api.get('/uffici/');
+    setUffici(response.data)
+  };
+
+
+  useEffect(() => {
+    fetchUffici();
+  }, []);
 
 
   return(

@@ -1,5 +1,5 @@
 # models.py
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime,Table
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime,Table,ARRAY,JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -16,28 +16,6 @@ class User(Base):
     
 
 
-# Tabelle di associazione per le relazioni many-to-many
-ufficio_processo_core = Table(
-    "ufficio_processo_core",
-    Base.metadata,
-    Column("ufficio_id", Integer, ForeignKey("uffici.id"), primary_key=True),
-    Column("processo_core_id", Integer, ForeignKey("processi_core.id"), primary_key=True)
-)
-
-ufficio_processo_verticale = Table(
-    "ufficio_processo_verticale",
-    Base.metadata,
-    Column("ufficio_id", Integer, ForeignKey("uffici.id"), primary_key=True),
-    Column("processo_verticale_id", Integer, ForeignKey("processi_verticali.id"), primary_key=True)
-)
-
-ufficio_processo_rilevante = Table(
-    "ufficio_processo_rilevante",
-    Base.metadata,
-    Column("ufficio_id", Integer, ForeignKey("uffici.id"), primary_key=True),
-    Column("processo_rilevante_id", Integer, ForeignKey("processi_rilevanti.id"), primary_key=True)
-)
-
 class Ufficio(Base):
     __tablename__ = "uffici"
     
@@ -45,13 +23,12 @@ class Ufficio(Base):
     nome = Column(String(100), nullable=False)
     numero = Column(String(10), nullable=False)
     descrizione = Column(String(1000))
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # Relazioni con i processi
-    processi_core = relationship("ProcessoCore", secondary=ufficio_processo_core, back_populates="uffici")
-    processi_verticali = relationship("ProcessoVerticale", secondary=ufficio_processo_verticale, back_populates="uffici")
-    processi_rilevanti = relationship("ProcessoRilevante", secondary=ufficio_processo_rilevante, back_populates="uffici")
+
+    processiCore = Column(JSON)
+    processiVerticali = Column(JSON)
+    processiRilevanti = Column(JSON)
 
 # Definizione dei modelli per i processi
 
@@ -60,12 +37,20 @@ class ProcessoCore(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
+    tipo = Column(String(50))
     descrizione = Column(String(500))
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    frequenza = Column(String(50))
+    input = Column(String(50))
+    output = Column(String(50))
+
+    diagrammi = Column(JSON)  # Memorizza un array in formato JSON
+    attori = Column(JSON)  # Memorizza un array in formato JSON
+    terzi_coinvolti = Column(JSON)
     
-    # Relazione inversa con uffici
-    uffici = relationship("Ufficio", secondary=ufficio_processo_core, back_populates="processi_core")
+    # Per modello di funzionamento e funzionamento, dovresti usare JSON o relazioni
+    modello_di_funzionamento = Column(JSON)  # JSON per la struttura nidificata
+    funzionamento = Column(JSON)  # JSON per le fasi
+
 
 class ProcessoVerticale(Base):
     __tablename__ = "processi_verticali"
@@ -73,11 +58,8 @@ class ProcessoVerticale(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
     descrizione = Column(String(500))
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    
-    # Relazione inversa con uffici
-    uffici = relationship("Ufficio", secondary=ufficio_processo_verticale, back_populates="processi_verticali")
+   
+   
 
 class ProcessoRilevante(Base):
     __tablename__ = "processi_rilevanti"
@@ -85,8 +67,5 @@ class ProcessoRilevante(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
     descrizione = Column(String(500))
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
-    # Relazione inversa con uffici
-    uffici = relationship("Ufficio", secondary=ufficio_processo_rilevante, back_populates="processi_rilevanti")
+   

@@ -4,7 +4,16 @@ import Footer from "../Footer";
 import CardComponent from "../components/CardComponent";
 import uffici from "../data/uffici";
 
+import { useContext } from "react";
+import { DataContext } from "../DataContext";
+
 const UfficiPage = () => {
+
+  const { uffici, loading } = useContext(DataContext);
+
+  if (loading) return <p>Caricamento...</p>;
+
+
   return (
     <>
       <div className="container-fluid p-0 card shadow">
@@ -34,10 +43,13 @@ const UfficiPage = () => {
                   cardBg="gradient-card"
                   textColor="text-white"
                 />
+                
               </div>
             ))}
           </div>
         </div>
+
+        
       </div>
       <hr />
     </>

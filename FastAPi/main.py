@@ -5,11 +5,18 @@ from typing import Annotated
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
-# Crea le tabelle nel database
-models.Base.metadata.create_all(bind=engine)
+origins = ["*"]  # Accetta richieste da qualsiasi origine
+
+app.add_middleware(CORSMiddleware, 
+               allow_origins = origins, 
+               allow_credentials = True,
+               allow_methods = ['*'],
+               allow_headers = ['*'])
 
 
 class UserBase(BaseModel):
@@ -30,6 +37,9 @@ def get_db():
 
 db_dependency = Annotated[Session,Depends(get_db)]
 
+
+# Crea le tabelle nel database
+models.Base.metadata.create_all(bind=engine)
 
 
 # Route di test per verificare che l'API funzioni
@@ -56,6 +66,12 @@ async def create_ufficio(ufficio : UfficioBase, db : db_dependency):
     db.commit()
     db.refresh(db_ufficio)
     return db_ufficio
+
+@app.get("/uffici/", status_code=status.HTTP_200_OK)
+async def read_uffici(db: db_dependency):
+    uffici = db.query(models.Ufficio).all()
+    return uffici
+
 
 @app.get("/uffici/{ufficio_id}", status_code=status.HTTP_200_OK)
 async def read_ufficio(ufficio_id:int,db :db_dependency):
@@ -87,4 +103,16 @@ async def read_user(user_id : int ,db:db_dependency):
         raise HTTPException(status_code=404,detail='User not found')
     return user
 
+
+@app.get("/processi/", status_code=status.HTTP_200_OK)
+async def get_processi(db: db_dependency):
+    processi_core = db.query(models.ProcessoCore).all()
+    processi_verticali = db.query(models.ProcessoVerticale).all()
+    processi_rilevanti = db.query(models.ProcessoRilevante).all()
+    
+    return {
+        "processi_core": processi_core,
+        "processi_verticali": processi_verticali,
+        "processi_rilevanti": processi_rilevanti
+    }
 

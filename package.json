@@ -5,6 +5,7 @@
     "@mui/icons-material": "^6.4.5",
     "@mui/material": "^6.4.5",
     "@xyflow/react": "^12.4.4",
+    "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "dagre": "^0.8.5",
     "re-resizable": "^6.10.3",

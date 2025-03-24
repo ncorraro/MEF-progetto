@@ -3,11 +3,12 @@ import Navbar from "./components/Navbar";
 import Footer from "./Footer";
 import Breadcrumbs from "./components/Breadcrumbs"; // Importa il breadcrumb
 import ResetScrollInstantly from "./components/ResetScrollInstantly"; // Importa il file
-
+import { DataProvider } from "./DataContext";
 
 const RootLayout = () => {
   return (
     <div>
+      <DataProvider>
       <ResetScrollInstantly /> {/* Scroll all'inizio a ogni cambio pagina */}
       <Navbar />
       <div className="container mt-3">
@@ -15,6 +16,8 @@ const RootLayout = () => {
         <Outlet />
         <Footer />
       </div>
+      </DataProvider>
+      
       
     </div>
   );
