@@ -3,9 +3,29 @@ import React from "react";
 import Footer from "../../Footer";
 import CardComponentProcesso from "../../components/CardComponentProcesso";
 import processiRilevanti from"../../data/processiRilevanti";
-
+import { useContext } from "react";
+import { DataContext } from "../../DataContext";
 
 const ProcessiRilevantiPage = () => {
+
+  const { processi, loading } = useContext(DataContext);
+  const processiRilevanti = processi.processi_rilevanti;
+  
+   if (loading) return <p>Caricamento...</p>;
+  
+    
+    // Funzione per suddividere l'array in gruppi di 2 elementi
+    const chunkArray = (array, chunkSize) => {
+      const chunks = [];
+      for (let i = 0; i < array.length; i += chunkSize) {
+        chunks.push(array.slice(i, i + chunkSize));
+      }
+      return chunks;
+    };
+  
+    // Raggruppa i processi in coppie
+    const processChunks = chunkArray(processiRilevanti, 2);
+  
     return (
       <>
         <div className="container-fluid p-0 card shadow">
@@ -26,25 +46,26 @@ const ProcessiRilevantiPage = () => {
         </div>
 
 
-          <div className="w-100">
-            {processiRilevanti.map((processo, index) => {
-              // Definizione classi dinamiche in base all'indice
-              const rowClass = index % 2 === 0 ? "col1" : "bg-white";
-              const cardBg = index % 2 === 0 ? "bg-white" : "col1";
-              const textColor = index % 2 === 0 ? "coltext1" : "text-white";
-
+        <div className="w-100">
+            {processChunks.map((chunk, chunkIndex) => {
+            
+              
               return (
-                <div className={`row w-100 mx-0 g-0 ${rowClass}`} key={processo.id}>
-                  <div className="col-12 d-flex justify-content-center p-5">
-                    <CardComponentProcesso
-                      id={processo.id}
-                      nome={processo.nome}
-                      tipo={processo.tipo}
-                      descrizione={processo.descrizione}
-                      cardBg={cardBg}
-                      textColor={textColor}
-                    />
-                  </div>
+                <div className={`row w-100 mx-0 p-2 `} >
+                  {chunk.map((processo, processIndex) => {
+                    
+                    
+                    return (
+                      <div className="col-md-6 d-flex justify-content-center " key={processo.id}>
+                        <CardComponentProcesso
+                          id={processo.id}
+                          nome={processo.nome}
+                          tipo={processo.tipo}
+                          descrizione={processo.descrizione}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })}

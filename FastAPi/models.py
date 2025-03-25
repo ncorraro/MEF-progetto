@@ -32,24 +32,24 @@ class Ufficio(Base):
 
 # Definizione dei modelli per i processi
 
+
 class ProcessoCore(Base):
     __tablename__ = "processi_core"
     
     id = Column(Integer, primary_key=True, index=True)
-    nome = Column(String(100), nullable=False)
-    tipo = Column(String(50))
-    descrizione = Column(String(500))
-    frequenza = Column(String(50))
-    input = Column(String(50))
-    output = Column(String(50))
+    nome = Column(String(500), nullable=False)
+    tipo = Column(String(50), default="core")
+    descrizione = Column(String(2000), nullable=False)
+    frequenza = Column(String(50), nullable=True)
+    input = Column(String(50), nullable=True)
+    output = Column(String(50), nullable=True)
+    diagrammi = Column(JSON, default=[])  
+    attori = Column(JSON, default=[])
+    terzi_coinvolti = Column(JSON, default=[])
+    modello_di_funzionamento = Column(JSON, default={})  
+    funzionamento = Column(JSON, default={})  
+    missione = Column(String(255),nullable=True)
 
-    diagrammi = Column(JSON)  # Memorizza un array in formato JSON
-    attori = Column(JSON)  # Memorizza un array in formato JSON
-    terzi_coinvolti = Column(JSON)
-    
-    # Per modello di funzionamento e funzionamento, dovresti usare JSON o relazioni
-    modello_di_funzionamento = Column(JSON)  # JSON per la struttura nidificata
-    funzionamento = Column(JSON)  # JSON per le fasi
 
 
 class ProcessoVerticale(Base):
@@ -67,5 +67,6 @@ class ProcessoRilevante(Base):
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
     descrizione = Column(String(500))
+    attori = Column(JSON, default=[])
     
    

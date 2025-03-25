@@ -40,14 +40,9 @@ const ProcessiPage = () => {
 
     return (
       <>
-        <div className="container-fluid p-0 card shadow">
+        <div className="container-fluid p-0 ">
           <div className="p-4">
-            <h2 className="display-3 mt-2 mb-3 coltext1">PROCESSI</h2>
-            <div className="row d-flex justify-content-center w-70 mx-auto">
-                <p className="coltext1 custom-text text-center" style={{ fontSize: 12 }}>Di seguito si presentano i processi dell'IGPNRR, distinguendo tra processi core, processi rilevanti e processi e attività verticali.
-                </p> 
-            </div> 
-
+            
             <div className="row rounded-3">
                 {/* Card Processi Core con animazione */}
                 <div 

@@ -3,9 +3,23 @@ import React from "react";
 import Footer from "../../Footer";
 import CardComponentProcesso from "../../components/CardComponentProcesso";
 import uffici from "../../data/uffici";
-import processiCore from "../../data/processiCore";
+//import processiCore from "../../data/processiCore";
+
+import { useContext } from "react";
+import { DataContext } from "../../DataContext";
+
+
+
+  
 
 const ProcessiCorePage = () => {
+
+  const { processi, loading } = useContext(DataContext);
+  const processiCore = processi.processi_core;
+
+  if (loading) return <p>Caricamento...</p>;
+
+
   // Funzione per suddividere l'array in gruppi di 2 elementi
   const chunkArray = (array, chunkSize) => {
     const chunks = [];

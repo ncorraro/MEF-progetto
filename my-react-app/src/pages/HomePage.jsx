@@ -7,10 +7,13 @@ import office from "../image/office.png";
 import processo from "../image/processo.png"; 
 import nxg from "../image/nxe3.png"; 
 import missione2 from "../image/missioni2.png"; 
-
+import ProcessiPage from "../pages/processi/ProcessiPage";
 import ExpandableImage from '../components/ExpandableImage';
 
 const HomePage = () => {
+
+
+  
   return (
     <>
       {/* Container principale con ombra */}
@@ -75,8 +78,13 @@ const HomePage = () => {
           
           {/* UFFICI E PROCESSI */}
         <div className="container">
+
+
+          <ProcessiPage/>
+
+          {/*
           <div className="row g-4 justify-content-center">
-            {/* Prima Card */}
+            
             <div className="col-md-6 ">
               <div className="card  p-4 position-relative bg-photo4">
                 <p className="text-white text-start">
@@ -90,7 +98,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Seconda Card */}
+            
             <div className="col-md-6">
               <div className="card  p-4 position-relative bg-photo5">
                 <p className="text-white text-start">
@@ -105,6 +113,7 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+          */}
         </div>
 
             
