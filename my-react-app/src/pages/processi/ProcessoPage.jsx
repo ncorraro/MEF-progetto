@@ -1,28 +1,62 @@
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import uffici from "../../data/uffici";
-import processiCore from "../../data/processiCore";
+import { useContext } from "react";
+import { DataContext } from "../../DataContext";
 import Funzionamento from "../../components/Funzionamento";
 
 const ProcessoPage = () => {
-  const { ufficioId, processoId } = useParams();
-  const [activeTab, setActiveTab] = useState("fase1");
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('fase1');
 
-  // Trova il processo corrispondente all'ID nell'URL
-  const processo = processiCore.find((p) => p.id === parseInt(processoId));
-  
-  // Trova gli uffici corrispondenti agli ID presenti in processo.attori
-  const ufficiCoinvolti = uffici.filter((u) => processo?.attori.includes(String(u.id)));
+  const { uffici, processi, loading } = useContext(DataContext);
+  const processiCore = processi?.processi_core || [];
+
+  if (loading) return <p>Caricamento...</p>;
+
+  const { processoId } = useParams(); 
+const processo = processiCore.find((p) => 
+  String(p.id) === processoId || 
+  p.id === parseInt(processoId)
+);
 
   if (!processo) {
     return <h2 className="text-center">Processo non trovato!</h2>;
   }
 
+  // Trova gli uffici corrispondenti agli ID presenti in processo.attori
+  const ufficiCoinvolti = uffici.filter((u) => processo?.attori?.includes(String(u.id)) || []);
+
   // Funzione per navigare al diagramma selezionato
   const navigateToDiagram = (diagramId) => {
-    navigate(`/diagramma/${processoId}/${diagramId}`);
+    navigate(`/diagramma/${id}/${diagramId}`);
   };
+
+
+ // Metodo simile a UfficioPage per trovare il processo
+ const processoDetails = Object.entries(processi || {})
+ .flatMap(([processoType, processiList]) => 
+   processoType.includes('core') 
+     ? processiList.map(p => ({ ...p, type: processoType }))
+     : []
+ )
+ .find(p => String(p.id) === processoId);
+
+if (loading) return <p>Caricamento...</p>;
+
+if (!processoDetails) {
+ return <h2 className="text-center">Processo non trovato!</h2>;
+}
+
+// Converti funzionamento in array
+const funzionamentoArray = Array.isArray(processoDetails.funzionamento) 
+? processoDetails.funzionamento 
+: processoDetails.funzionamento 
+  ? Object.values(processoDetails.funzionamento) 
+  : [];
+  
+
+  
+
 
   return (
     <div className="container-fluid mt-4 card shadow">
@@ -70,7 +104,6 @@ const ProcessoPage = () => {
         </div>
       </div>
 
-      {/* Resto del componente rimane invariato */}
       {/* Sezione con due colonne */}
       <div className="container mt-2">
         <div className="row bg-photo">
@@ -135,7 +168,7 @@ const ProcessoPage = () => {
                   </div>
                   <div className="p-1 w-67 d-flex flex-column" style={{ flex: "2" }}>
                     <ul className="list-group">
-                      {processo.terziCoinvolti.map((terzo, index) => (
+                      {processo.terziCoinvolti?.map((terzo, index) => (
                         <li className="card p-1 mb-1 shadow" key={index}>
                           <div className="card-body d-flex align-items-center justify-content-between gap-3">
                             <i className="bi bi-hdd-stack-fill fs-4 text-primary"></i>
@@ -152,52 +185,55 @@ const ProcessoPage = () => {
         </div>
       </div>
 
-      {/* Funzionamento del Processo */}
-      <div className="container mt-1 d-flex align-self-center">
-      <Funzionamento modelloDiFunzionamento={processo.modelloDiFunzionamento} />
+       {/* Funzionamento del Processo */}
+       <div className="container mt-1">
+        <Funzionamento modelloDiFunzionamento={processoDetails.modello_di_funzionamento} />
       </div>
 
-      
+  {/* Fasi del Processo */}
+    <div className="row mt-2">
+      <div className="col">
+        <div className="card shadow col1 text-white mb-3">
+          <h4 className="display-6 text-start">Fasi del processo di funzionamento</h4>
 
-
-        {/* Fasi del Processo */}
-      <div className="row mt-2">
-        <div className="col">
-          <div className="card shadow col1 text-white mb-3">
-            <h4 className="display-6 text-start">Fasi del processo di funzionamento</h4>
-            {/* Tabs per le fasi - con gestione overflow */}
-            <div className="nav-container position-relative">
-              <ul className="nav nav-tabs mb-3 flex-nowrap overflow-hidden">
-                {processo.funzionamento.map((fase, index) => (
-                  <li className="nav-item text-truncate" key={index} style={{ maxWidth: "200px" }}>
-                    <button
-                      className={`nav-link text-truncate w-100 ${activeTab === `fase${fase.fase}` ? "active bg-white" : ""}`}
-                      onClick={() => setActiveTab(`fase${fase.fase}`)}
-                      title={`Fase ${fase.fase}: ${fase.titolo}`}
-                    >
-                      <span className={activeTab === `fase${fase.fase}` ? "coltext1" : "text-white"}>
-                        Fase {fase.fase}: {fase.titolo}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Contenuto delle fasi */}
-            <div className="card p-3 shadow text-start">
-              {processo.funzionamento.map((fase, index) => (
-                <div key={index} className={activeTab === `fase${fase.fase}` ? "d-block" : "d-none"}>
-                  <h4>{fase.titolo}</h4>
-                  <p>{fase.descrizione}</p>
-                </div>
+          {/* Tabs per le fasi - con gestione overflow */}
+          <div className="nav-container position-relative">
+            <ul className="nav nav-tabs mb-3 flex-nowrap">
+              {processo.funzionamento && Object.entries(processo.funzionamento).map(([titolo, descrizione], index) => (
+                <li className="nav-item" key={index}>
+                  <button
+                    className={`nav-link ${activeTab === `fase${index}` ? "active bg-white" : ""}`}
+                    onClick={() => setActiveTab(`fase${index}`)}
+                    title={`Fase ${index + 1}: ${titolo}`}
+                    style={{ whiteSpace: 'normal', wordBreak: 'break-word' }} // Permette al titolo di andare su più righe se necessario
+                  >
+                    <span className={activeTab === `fase${index}` ? "coltext1" : "text-white"}>
+                      Fase {index + 1}: {titolo}
+                    </span>
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
+          </div>
+
+          {/* Contenuto delle fasi */}
+          <div className="card p-3 shadow text-start">
+            {processo.funzionamento && Object.entries(processo.funzionamento).map(([titolo, descrizione], index) => (
+              <div key={index} className={activeTab === `fase${index}` ? "d-block" : "d-none"}>
+                <h4>{titolo}</h4>
+                <p>{descrizione}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+    </div>
+
+
+
     </div>
   );
 };
 
 export default ProcessoPage;
+

@@ -41,8 +41,8 @@ class ProcessoCore(Base):
     tipo = Column(String(50), default="core")
     descrizione = Column(String(2000), nullable=False)
     frequenza = Column(String(50), nullable=True)
-    input = Column(String(50), nullable=True)
-    output = Column(String(50), nullable=True)
+    input = Column(String(100), nullable=True)
+    output = Column(String(100), nullable=True)
     diagrammi = Column(JSON, default=[])  
     attori = Column(JSON, default=[])
     terzi_coinvolti = Column(JSON, default=[])
@@ -52,8 +52,8 @@ class ProcessoCore(Base):
 
 
 
-class ProcessoVerticale(Base):
-    __tablename__ = "processi_verticali"
+class ProcessoRilevante(Base):
+    __tablename__ = "processi_rilevanti"
     
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
@@ -61,8 +61,8 @@ class ProcessoVerticale(Base):
    
    
 
-class ProcessoRilevante(Base):
-    __tablename__ = "processi_rilevanti"
+class ProcessoVerticale(Base):
+    __tablename__ = "processi_verticali"
     
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)

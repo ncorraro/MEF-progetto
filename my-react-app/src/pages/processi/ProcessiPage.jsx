@@ -2,10 +2,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import Footer from "../../Footer";
 import CardComponent from "../../components/CardComponent";
-import uffici from "../../data/uffici";
-import processiCore from"../../data/processiCore";
-import processiRilevanti from "../../data/processiRilevanti";
-import processiVerticali from "../../data/processiVerticali";
+
 
 const ProcessiPage = () => {
     // Stile per la card Processi Core

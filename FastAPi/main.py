@@ -24,32 +24,33 @@ app.add_middleware(CORSMiddleware,
 class UserBase(BaseModel):
     name : str
 
-
 class UfficioBase(BaseModel):
-    nome:str
-    numero:int
-    descrizione:str
+    nome: Optional[str] = None
+    numero: Optional[str] = None
+    descrizione: Optional[str] = None
+    processiCore: Optional[Dict[str, Any]] = None
+    processiVerticali: Optional[Dict[str, Any]] = None
+    processiRilevanti: Optional[Dict[str, Any]] = None
 
-
-
-class ProcessoCoreBase(BaseModel):
-    nome: str
-    descrizione: str
-    frequenza: str
-    input: str
-    output: str
-    diagrammi: List[Any]
-    attori: List[str]
-    terzi_coinvolti: List[str]
-    modello_di_funzionamento: Dict[str, Any]
-    funzionamento: Dict[str, Any]
-    missione : str
-    
     class Config:
         from_attributes = True
 
+class ProcessoCoreBase(BaseModel):
+    nome: Optional[str] = None
+    descrizione: Optional[str] = None
+    frequenza: Optional[str] = None
+    input: Optional[str] = None
+    output: Optional[str] = None
+    diagrammi: Optional[List[Any]] = None
+    attori: Optional[List[str]] = None
+    terzi_coinvolti: Optional[List[str]] = None
+    modello_di_funzionamento: Optional[Dict[str, Any]] = None
+    funzionamento: Optional[Dict[str, Any]] = None  
+    missione: Optional[str] = None
+
+
         
-class ProcessoRilevanteBase(BaseModel):
+class ProcessoVerticaleBase(BaseModel):
     nome: str
     descrizione: str
     attori: List[str]
@@ -149,13 +150,25 @@ async def read_ufficio(ufficio_id:int,db :db_dependency):
         raise HTTPException(status_code=404 , detail='ufficio not found')
     return ufficio
 
-@app.delete("/uffici/{ufficio_id}",status_code=status.HTTP_200_OK)
-async def delete_ufficio(ufficio_id:int,db:db_dependency):
+# Eliminazione Ufficio con riordino ID
+@app.delete("/uffici/{ufficio_id}", status_code=status.HTTP_200_OK)
+async def delete_ufficio(ufficio_id: int, db: db_dependency):
     db_ufficio = db.query(models.Ufficio).filter(models.Ufficio.id == ufficio_id).first()
     if db_ufficio is None:
-        raise HTTPException(status_code=404, detail='ufficio not found') 
+        raise HTTPException(status_code=404, detail='Ufficio non trovato') 
+    
     db.delete(db_ufficio)
     db.commit()
+    
+    # Riordina gli ID dopo l'eliminazione
+    reset_sequence(db, models.Ufficio)
+    
+    return {"message": "Ufficio eliminato e ID riordinati"}
+
+
+
+#################################################################################################
+
 
 
 #cose fa user
@@ -173,6 +186,15 @@ async def read_user(user_id : int ,db:db_dependency):
     if user is None :
         raise HTTPException(status_code=404,detail='User not found')
     return user
+
+
+
+
+
+#################################################################################################
+
+
+
 
 
 @app.get("/processi/", status_code=status.HTTP_200_OK)
@@ -227,9 +249,17 @@ async def delete_processoCore(processo_id: int, db: db_dependency):
     
     return {"message": "Processo Core eliminato e ID riordinati"}
 
+
+
+
+#################################################################################################
+
+
+
+
 # Rotte per Processo Verticale
 @app.post("/processoVerticale/", status_code=status.HTTP_201_CREATED)
-async def create_processoVerticale(processoVerticale: ProcessoBase, db: db_dependency):
+async def create_processoVerticale(processoVerticale: ProcessoVerticaleBase, db: db_dependency):
     # Rimuove l'ID se presente per lasciare che il database lo generi
     processo_data = processoVerticale.model_dump()
     processo_data.pop('id', None)
@@ -252,18 +282,34 @@ async def read_processoVerticale(processo_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail='Processo Verticale non trovato')
     return processo
 
+# Eliminazione Processo Verticale con riordino ID
 @app.delete("/processiVerticali/{processo_id}", status_code=status.HTTP_200_OK)
 async def delete_processoVerticale(processo_id: int, db: db_dependency):
     db_processo = db.query(models.ProcessoVerticale).filter(models.ProcessoVerticale.id == processo_id).first()
     if db_processo is None:
         raise HTTPException(status_code=404, detail='Processo Verticale non trovato')
+    
     db.delete(db_processo)
     db.commit()
-    return {"message": "Processo Verticale eliminato con successo"}
+    
+    # Riordina gli ID dopo l'eliminazione
+    reset_sequence(db, models.ProcessoVerticale)
+    
+    return {"message": "Processo Verticale eliminato e ID riordinati"}
+
+
+
+#################################################################################################
+
+
+
+
+
+
 
 # Rotte per Processo Rilevante
 @app.post("/processoRilevante/", status_code=status.HTTP_201_CREATED)
-async def create_processoRilevante(processoRilevante: ProcessoRilevanteBase, db: db_dependency):
+async def create_processoRilevante(processoRilevante: ProcessoBase, db: db_dependency):
     # Rimuove l'ID se presente per lasciare che il database lo generi
     processo_data = processoRilevante.model_dump()
     processo_data.pop('id', None)
@@ -286,11 +332,76 @@ async def read_processoRilevante(processo_id: int, db: db_dependency):
         raise HTTPException(status_code=404, detail='Processo Rilevante non trovato')
     return processo
 
+# Eliminazione Processo Rilevante con riordino ID
 @app.delete("/processiRilevanti/{processo_id}", status_code=status.HTTP_200_OK)
 async def delete_processoRilevante(processo_id: int, db: db_dependency):
     db_processo = db.query(models.ProcessoRilevante).filter(models.ProcessoRilevante.id == processo_id).first()
     if db_processo is None:
         raise HTTPException(status_code=404, detail='Processo Rilevante non trovato')
+    
     db.delete(db_processo)
     db.commit()
-    return {"message": "Processo Rilevante eliminato con successo"}
+    
+    # Riordina gli ID dopo l'eliminazione
+    reset_sequence(db, models.ProcessoRilevante)
+    
+    return {"message": "Processo Rilevante eliminato e ID riordinati"}
+
+
+
+#################################################################################################
+
+
+
+
+#endpoint di modifica 
+
+@app.patch("/processiCore/{processo_id}", status_code=status.HTTP_200_OK)
+async def update_parziale_processoCore(
+    processo_id: int, 
+    processo_update: ProcessoCoreBase, 
+    db: db_dependency
+):
+    # Trova il processo core esistente
+    db_processo = db.query(models.ProcessoCore).filter(models.ProcessoCore.id == processo_id).first()
+    
+    # Verifica se il processo esiste
+    if db_processo is None:
+        raise HTTPException(status_code=404, detail='Processo Core non trovato')
+    
+    # Converti il modello di aggiornamento in dizionario, rimuovendo i campi None
+    update_data = {k: v for k, v in processo_update.model_dump().items() if v is not None}
+    
+    # Aggiorna solo i campi presenti
+    for key, value in update_data.items():
+        setattr(db_processo, key, value)
+    
+    db.commit()
+    db.refresh(db_processo)
+    return db_processo
+
+
+# Endpoint di aggiornamento parziale
+@app.patch("/uffici/{ufficio_id}", status_code=status.HTTP_200_OK)
+async def update_parziale_ufficio(
+    ufficio_id: int, 
+    ufficio_update: UfficioBase, 
+    db: db_dependency
+):
+    # Trova l'ufficio esistente
+    db_ufficio = db.query(models.Ufficio).filter(models.Ufficio.id == ufficio_id).first()
+    
+    # Verifica se l'ufficio esiste
+    if db_ufficio is None:
+        raise HTTPException(status_code=404, detail='Ufficio non trovato')
+    
+    # Converti il modello di aggiornamento in dizionario, rimuovendo i campi None
+    update_data = {k: v for k, v in ufficio_update.model_dump().items() if v is not None}
+    
+    # Aggiorna solo i campi presenti
+    for key, value in update_data.items():
+        setattr(db_ufficio, key, value)
+    
+    db.commit()
+    db.refresh(db_ufficio)
+    return db_ufficio
