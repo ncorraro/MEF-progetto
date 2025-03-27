@@ -14,17 +14,21 @@ const ProcessoPage = () => {
   if (loading) return <p>Caricamento...</p>;
 
   const { processoId } = useParams(); 
-const processo = processiCore.find((p) => 
-  String(p.id) === processoId || 
-  p.id === parseInt(processoId)
-);
+  const processo = processiCore.find((p) => 
+    String(p.id) === processoId || 
+    p.id === parseInt(processoId)
+  );
 
   if (!processo) {
     return <h2 className="text-center">Processo non trovato!</h2>;
   }
 
   // Trova gli uffici corrispondenti agli ID presenti in processo.attori
-  const ufficiCoinvolti = uffici.filter((u) => processo?.attori?.includes(String(u.id)) || []);
+ 
+  const ufficiCoinvolti = uffici.filter(ufficio => processo.attori.includes(String(ufficio.id))  // Converte l'ID dell'ufficio in stringa per il confronto
+  );
+  
+
 
   // Funzione per navigare al diagramma selezionato
   const navigateToDiagram = (diagramId) => {
@@ -48,12 +52,10 @@ if (!processoDetails) {
 }
 
 // Converti funzionamento in array
-const funzionamentoArray = Array.isArray(processoDetails.funzionamento) 
-? processoDetails.funzionamento 
-: processoDetails.funzionamento 
-  ? Object.values(processoDetails.funzionamento) 
+const funzionamentoArray = Array.isArray(processoDetails.funzionamento)
+  ? processoDetails.funzionamento
   : [];
-  
+
 
   
 
@@ -121,6 +123,14 @@ const funzionamentoArray = Array.isArray(processoDetails.funzionamento)
                 </li>
                 <li className="list-group-item d-flex">
                   <div className="col1 text-white p-2 w-33 d-flex align-items-center justify-content-center card" style={{ flex: "1" }}>
+                    Missione Di Riferimento:
+                  </div>
+                  <div className="p-2 w-67 d-flex align-items-center" style={{ flex: "2" }}>
+                    {processo.missione}
+                  </div>
+                </li>
+                <li className="list-group-item d-flex">
+                  <div className="col1 text-white p-2 w-33 d-flex align-items-center justify-content-center card" style={{ flex: "1" }}>
                     Input:
                   </div>
                   <div className="p-2 w-67 d-flex align-items-center" style={{ flex: "2" }}>
@@ -135,14 +145,7 @@ const funzionamentoArray = Array.isArray(processoDetails.funzionamento)
                     {processo.output}
                   </div>
                 </li>
-              </ul>
-            </div>
-          </div>
 
-          {/* Colonna 2 */}
-          <div className="col-md-6 d-flex">
-            <div className="mb-3 w-100 d-flex align-items-center justify-content-center">
-              <ul className="list-group ps-4 w-100">
                 <li className="list-group-item d-flex">
                   <div className="col1 text-white p-2 w-33 d-flex align-items-center justify-content-center card" style={{ flex: "1" }}>
                     Attori IGPNRR coinvolti:
@@ -162,13 +165,39 @@ const funzionamentoArray = Array.isArray(processoDetails.funzionamento)
                     )}
                   </div>
                 </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Colonna 2 */}
+          <div className="col-md-6 d-flex">
+            <div className="mb-3 w-100 d-flex align-items-center justify-content-center">
+              <ul className="list-group ps-4 w-100">
+
                 <li className="list-group-item d-flex">
                   <div className="col1 text-white p-1 w-33 d-flex align-items-center justify-content-center card" style={{ flex: "1" }}>
-                    Terzi coinvolti:
+                    Altre strutture coinvolte :
                   </div>
                   <div className="p-1 w-67 d-flex flex-column" style={{ flex: "2" }}>
                     <ul className="list-group">
-                      {processo.terziCoinvolti?.map((terzo, index) => (
+                    {processo.terzi_coinvolti.map((terzo, index) => (
+                        <li className="card p-1 mb-1 shadow" key={index}>
+                          <div className="card-body d-flex align-items-center justify-content-between gap-3">
+                            <i className="bi bi-hdd-stack-fill fs-4 text-primary"></i>
+                            <p className="card-text flex-grow-1 m-0 text-center">{terzo}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+                <li className="list-group-item d-flex">
+                  <div className="col1 text-white p-1 w-33 d-flex align-items-center justify-content-center card" style={{ flex: "1" }}>
+                  Destinatari output di processo:
+                  </div>
+                  <div className="p-1 w-67 d-flex flex-column" style={{ flex: "2" }}>
+                    <ul className="list-group">
+                    {processo.destinatari.map((terzo, index) => (
                         <li className="card p-1 mb-1 shadow" key={index}>
                           <div className="card-body d-flex align-items-center justify-content-between gap-3">
                             <i className="bi bi-hdd-stack-fill fs-4 text-primary"></i>
@@ -190,41 +219,44 @@ const funzionamentoArray = Array.isArray(processoDetails.funzionamento)
         <Funzionamento modelloDiFunzionamento={processoDetails.modello_di_funzionamento} />
       </div>
 
-  {/* Fasi del Processo */}
-    <div className="row mt-2">
-      <div className="col">
-        <div className="card shadow col1 text-white mb-3">
-          <h4 className="display-6 text-start">Fasi del processo di funzionamento</h4>
+        {/* Fasi del Processo */}
+          <div className="row mt-2">
+            <div className="col">
+              <div className="card shadow col1 text-white mb-3">
+                <h4 className="display-6 text-start">Fasi del processo di funzionamento</h4>
 
-          {/* Tabs per le fasi - con gestione overflow */}
-          <div className="nav-container position-relative">
-            <ul className="nav nav-tabs mb-3 flex-nowrap">
-              {processo.funzionamento && Object.entries(processo.funzionamento).map(([titolo, descrizione], index) => (
-                <li className="nav-item" key={index}>
+                {/* Tabs per le fasi - con gestione overflow */}
+                <div className="nav-container position-relative">
+                  <ul className="nav nav-tabs mb-3 flex-nowrap">
+                  {funzionamentoArray.map((fase, index) => (
+
+                  <li className="nav-item" key={index}>
                   <button
                     className={`nav-link ${activeTab === `fase${index}` ? "active bg-white" : ""}`}
                     onClick={() => setActiveTab(`fase${index}`)}
-                    title={`Fase ${index + 1}: ${titolo}`}
-                    style={{ whiteSpace: 'normal', wordBreak: 'break-word' }} // Permette al titolo di andare su più righe se necessario
+                    title={`Fase ${index + 1}: ${fase.nome}`}
+                    style={{ whiteSpace: 'normal', wordBreak: 'break-word' }} 
                   >
                     <span className={activeTab === `fase${index}` ? "coltext1" : "text-white"}>
-                      Fase {index + 1}: {titolo}
+                      Fase {index + 1}: {fase.nome}
                     </span>
                   </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  </li>
 
-          {/* Contenuto delle fasi */}
-          <div className="card p-3 shadow text-start">
-            {processo.funzionamento && Object.entries(processo.funzionamento).map(([titolo, descrizione], index) => (
-              <div key={index} className={activeTab === `fase${index}` ? "d-block" : "d-none"}>
-                <h4>{titolo}</h4>
-                <p>{descrizione}</p>
-              </div>
-            ))}
-          </div>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Contenuto delle fasi */}
+                <div className="card p-3 shadow text-start">
+                  {funzionamentoArray.map((fase, index) => (
+                    <div key={index} className={activeTab === `fase${index}` ? "d-block" : "d-none"}>
+                      <h4>{fase.nome}</h4>
+                      <p>{fase.descrizione}</p>
+                    </div>
+                  ))}
+                </div>
+
         </div>
       </div>
     </div>

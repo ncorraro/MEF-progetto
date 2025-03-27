@@ -7,7 +7,7 @@ from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Text,Any
 from sqlalchemy import text,func
 
 app = FastAPI()
@@ -19,6 +19,8 @@ app.add_middleware(CORSMiddleware,
                allow_credentials = True,
                allow_methods = ['*'],
                allow_headers = ['*'])
+
+
 
 
 class UserBase(BaseModel):
@@ -35,19 +37,26 @@ class UfficioBase(BaseModel):
     class Config:
         from_attributes = True
 
+
+class FunzionamentoItem(BaseModel):
+    nome: str  # Questo è il varchar
+    descrizione: str  # Questo è il text
+
 class ProcessoCoreBase(BaseModel):
     nome: Optional[str] = None
     descrizione: Optional[str] = None
     frequenza: Optional[str] = None
     input: Optional[str] = None
     output: Optional[str] = None
-    diagrammi: Optional[List[Any]] = None
+    diagrammi: Optional[List[Dict[str, str]]] = None
     attori: Optional[List[str]] = None
     terzi_coinvolti: Optional[List[str]] = None
-    modello_di_funzionamento: Optional[Dict[str, Any]] = None
-    funzionamento: Optional[Dict[str, Any]] = None  
-    missione: Optional[str] = None
+    destinatari: Optional[List[Any]] = None
+    # Lista di oggetti con nome (varchar) e descrizione (text)
+    modello_di_funzionamento: Optional[List[FunzionamentoItem]] = None
+    funzionamento: Optional[List[FunzionamentoItem]] = None
 
+    missione: Optional[str] = None
 
         
 class ProcessoVerticaleBase(BaseModel):
@@ -350,36 +359,32 @@ async def delete_processoRilevante(processo_id: int, db: db_dependency):
 
 
 #################################################################################################
-
-
-
-
-#endpoint di modifica 
-
 @app.patch("/processiCore/{processo_id}", status_code=status.HTTP_200_OK)
 async def update_parziale_processoCore(
-    processo_id: int, 
-    processo_update: ProcessoCoreBase, 
+    processo_id: int,
+    processo_update: ProcessoCoreBase,
     db: db_dependency
 ):
+    # Debug: stampa il payload ricevuto
+    print("Payload ricevuto:", processo_update)
+
     # Trova il processo core esistente
     db_processo = db.query(models.ProcessoCore).filter(models.ProcessoCore.id == processo_id).first()
-    
+
     # Verifica se il processo esiste
     if db_processo is None:
         raise HTTPException(status_code=404, detail='Processo Core non trovato')
-    
+
     # Converti il modello di aggiornamento in dizionario, rimuovendo i campi None
-    update_data = {k: v for k, v in processo_update.model_dump().items() if v is not None}
+    update_data = processo_update.model_dump(exclude_unset=True)
     
     # Aggiorna solo i campi presenti
     for key, value in update_data.items():
         setattr(db_processo, key, value)
-    
+
     db.commit()
     db.refresh(db_processo)
     return db_processo
-
 
 # Endpoint di aggiornamento parziale
 @app.patch("/uffici/{ufficio_id}", status_code=status.HTTP_200_OK)

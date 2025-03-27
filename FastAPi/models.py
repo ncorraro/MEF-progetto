@@ -1,5 +1,5 @@
 # models.py
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime,Table,ARRAY,JSON
+from sqlalchemy import Column, Integer, String,Text, Float, ForeignKey, DateTime,Table,ARRAY,JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
@@ -33,9 +33,11 @@ class Ufficio(Base):
 # Definizione dei modelli per i processi
 
 
+from sqlalchemy import Column, Integer, String, Text, JSON
+
 class ProcessoCore(Base):
     __tablename__ = "processi_core"
-    
+
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(500), nullable=False)
     tipo = Column(String(50), default="core")
@@ -43,14 +45,15 @@ class ProcessoCore(Base):
     frequenza = Column(String(50), nullable=True)
     input = Column(String(100), nullable=True)
     output = Column(String(100), nullable=True)
-    diagrammi = Column(JSON, default=[])  
+    diagrammi = Column(JSON, default=[])
     attori = Column(JSON, default=[])
     terzi_coinvolti = Column(JSON, default=[])
-    modello_di_funzionamento = Column(JSON, default={})  
-    funzionamento = Column(JSON, default={})  
-    missione = Column(String(255),nullable=True)
+    destinatari = Column(JSON, default=[])
+    # Usare JSON per rappresentare lista di tuple [varchar, text]
+    modello_di_funzionamento = Column(JSON, nullable=True, default=[])
+    funzionamento = Column(JSON, nullable=True, default=[])
 
-
+    missione = Column(String(255), nullable=True)
 
 class ProcessoRilevante(Base):
     __tablename__ = "processi_rilevanti"

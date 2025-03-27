@@ -59,9 +59,9 @@ const HomePage = () => {
           
 
           {/* MISSIONI */}
-          <div className="container col1   ps-4 pe-4 py-4 ">
-            <h5 className="display-5 fw-bold text-start coltext4 ">LE MISSIONI DELL'IGPNRR</h5>
-            <p className="coltext4 text-start" style={{ fontSize: 12 }}>
+          <div className="container   ps-4 pe-4 py-4 ">
+            <h5 className="display-5 fw-bold text-start coltext1 ">LE MISSIONI DELL'IGPNRR</h5>
+            <p className="coltext1 text-start" style={{ fontSize: 12 }}>
               Al fine di accedere alle risorse finanziarie del RRF, l'Italia ha presentato il Piano Nazionale di Ripresa e Resilienza articolato inizialmente in sei Missioni alle quali, tramite la modifica della Council Implementing Decision (CID) n. 16051/23 di dicembre 2023, è stata integrata la Missione "REPowerEU" .
             </p>
 
@@ -73,7 +73,7 @@ const HomePage = () => {
            
           </div>
 
-          <div className="container  rounded-bottom-4 ps-4 pe-4 py-2 pt-5 border-start border-end border-bottom">
+          <div className="container  rounded-bottom-4 ps-4 pe-4 py-2  border-start border-end border-bottom">
           {/* Box informativo sui processi */}
           
           {/* UFFICI E PROCESSI */}
