@@ -52,14 +52,12 @@ const HomePage = () => {
               Al fine di accedere alle risorse finanziarie del RRF, l'Italia ha presentato <span className="fw-bold">il Piano Nazionale di Ripresa e Resilienza</span> articolato inizialmente in <span className="fw-bold">sei Missioni</span> alle quali, tramite la modifica della Council Implementing Decision (CID) n. 16051/23 di dicembre 2023, è stata <span className="fw-bold">integrata la Missione "REPowerEU"</span>.
             </p>
           </div>
-
-         
  
-          </div>
+         </div>
           
 
           {/* MISSIONI */}
-          <div className="container   ps-4 pe-4 py-4 ">
+          <div className="container   ps-4 pe-4 py-4 border-start border-end">
             <h5 className="display-5 fw-bold text-start coltext1 ">LE MISSIONI DELL'IGPNRR</h5>
             <p className="coltext1 text-start" style={{ fontSize: 12 }}>
               Al fine di accedere alle risorse finanziarie del RRF, l'Italia ha presentato il Piano Nazionale di Ripresa e Resilienza articolato inizialmente in sei Missioni alle quali, tramite la modifica della Council Implementing Decision (CID) n. 16051/23 di dicembre 2023, è stata integrata la Missione "REPowerEU" .
@@ -78,14 +76,14 @@ const HomePage = () => {
           
           {/* UFFICI E PROCESSI */}
         <div className="container">
-
+        <hr />
 
           <ProcessiPage/>
 
-          {/*
+          
           <div className="row g-4 justify-content-center">
             
-            <div className="col-md-6 ">
+            <div className="col ">
               <div className="card  p-4 position-relative bg-photo4">
                 <p className="text-white text-start">
                   L'IGPNRR è un ufficio centrale di livello dirigenziale generale, è articolato organizzativamente in otto uffici.
@@ -98,8 +96,8 @@ const HomePage = () => {
               </div>
             </div>
 
-            
-            <div className="col-md-6">
+            {/*
+            <div className="col">
               <div className="card  p-4 position-relative bg-photo5">
                 <p className="text-white text-start">
                   I processi dell'Ispettorato si configurano come un complesso organizzativo-operative dedicato alle proprie mansioni.
@@ -112,8 +110,9 @@ const HomePage = () => {
                 </Link>
               </div>
             </div>
+            */}
           </div>
-          */}
+          
         </div>
 
             

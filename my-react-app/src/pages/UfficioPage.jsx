@@ -58,9 +58,9 @@ const UfficioPage = () => {
                     <div className="card-body d-flex align-items-center justify-content-between gap-3">
                       <i className="bi bi-cpu-fill fs-4 text-primary"></i>
                       <p className="card-text flex-grow-1 m-0 text-center">{processo.nome}</p>
-                      <small className="text-muted">Ruolo: {processo.ruolo}</small>
-                      <Link to={`/ufficio/${ufficio.id}/processo/${processo.id}`} className="btn col1 btn-sm text-white">
-                        Vai al processo <i className="bi bi-arrow-right-square-fill text-white fs-6 ms-2"></i>
+                      <small className="text-muted">Ufficio {processo.ruolo}</small>
+                      <Link to={`/ufficio/${ufficio.id}/processo/${processo.id}`} className="btn col1 btn-sm text-white ">
+                         <i className="bi bi-arrow-right-square-fill text-white fs-6  "></i>
                       </Link>
                     </div>
                   </li>
@@ -83,9 +83,9 @@ const UfficioPage = () => {
                     <div className="card-body d-flex align-items-center justify-content-between gap-3">
                       <i className="bi bi-distribute-vertical fs-4 text-primary"></i>
                       <p className="card-text flex-grow-1 m-0 text-center">{processo.nome}</p>
-                      <small className="text-muted">Ruolo: {processo.ruolo}</small>
+                      <small className="text-muted">Ufficio {processo.ruolo}</small>
                       <Link to={`/ufficio/${ufficio.id}/processoVerticale/${processo.id}`} className="btn col1 btn-sm text-white">
-                        Vai al processo <i className="bi bi-arrow-right-square-fill text-white fs-5 ms-2"></i>
+                        <i className="bi bi-arrow-right-square-fill text-white fs-5 "></i>
                       </Link>
                     </div>
                   </li>
@@ -102,9 +102,9 @@ const UfficioPage = () => {
                     <div className="card-body d-flex align-items-center justify-content-between gap-3">
                       <i className="bi bi-aspect-ratio fs-4 text-primary"></i>
                       <p className="card-text flex-grow-1 m-0 text-center">{processo.nome}</p>
-                      <small className="text-muted">Ruolo: {processo.ruolo}</small>
+                      <small className="text-muted">Ufficio {processo.ruolo}</small>
                       <Link to={`/ufficio/${ufficio.id}/processoRilevante/${processo.id}`} className="btn col1 btn-sm text-white">
-                        Vai al processo <i className="bi bi-arrow-right-square-fill text-white fs-5 ms-2"></i>
+                        <i className="bi bi-arrow-right-square-fill text-white fs-5 "></i>
                       </Link>
                     </div>
                   </li>
